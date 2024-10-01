@@ -58,9 +58,15 @@ const getSearch = (e) => {
 const buttonOver = (e) => {
   e.target.innerHTML = "Go!";
 }
+
 const buttonOut = (e) => {
   e.target.innerHTML = "Search";
 }
+
+// Function to handle popular search buttons (e.g., Pasta, Sandwiches)
+const handlePopularSearch = (searchTerm) => {
+    setQuery(searchTerm); // Update query with popular search term
+  };
 
   return(
     <div className="App">
@@ -69,6 +75,16 @@ const buttonOut = (e) => {
         <input className="search-bar" type="text" placeholder="Enter your favourite dish, I'm sure we have it! :)" value={search} onChange={updateSearch}/> {/*passes the onChange event to updateSearch, it needs to be here so can retrieve input value (as opposed to button)*/}
         <button className="search-button" type="submit" onMouseOver={buttonOver} onMouseOut={buttonOut}>Search</button>
       </form>
+      {/* Popular Search Buttons */}
+      <div className="popular-searches">
+        <h2>Popular Searches</h2>
+        <button onClick={() => handlePopularSearch('pasta')}>Pasta</button>
+        <button onClick={() => handlePopularSearch('sandwiches')}>Sandwiches</button>
+        <button onClick={() => handlePopularSearch('salad')}>Salad</button>
+        <button onClick={() => handlePopularSearch('pizza')}>Pizza</button>
+      </div>
+
+      {/* Recipe results */}
       <div className="recipe">
       {recipes.map(recipe => ( //iterate over the array, use parenthesis to return the JSX.
         <Recipe 
