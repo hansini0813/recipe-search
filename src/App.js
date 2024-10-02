@@ -28,7 +28,7 @@ const [recipes, setRecipes] = useState([]); //array because data.hits is an arra
 const [search, setSearch] = useState(""); //state to store user input for search bar, emtpy to begin with
 const [query, setQuery] = useState("croissant"); //state to store the final query when press search
 const [nutrition, setNutrition] = useState(null); // To store nutrition info
-
+const [favorites, setFavorites] = useState(new Set()); // Set to store favorite recipe labels
 
 //EFFECTS
 //activates on page load, and everytime [] is updated (never lel)
@@ -124,6 +124,24 @@ const handlePopularSearch = (searchTerm) => {
     setQuery(searchTerm); // Update query with popular search term
   };
 
+const isFavorite = (recipeLabel) => {
+    return favorites.has(recipeLabel); // Check if the recipe label is in the favorites set
+};
+
+// Toggle favorite recipe
+  const toggleFavorite = (recipeLabel) => {
+    setFavorites(prevFavorites => {
+      const newFavorites = new Set(prevFavorites);
+      if (newFavorites.has(recipeLabel)) {
+        newFavorites.delete(recipeLabel); // Remove from favorites
+      } else {
+        newFavorites.add(recipeLabel); // Add to favorites
+      }
+      return newFavorites;
+    });
+  };
+
+
   return(
     <div className="App">
       <Title />
@@ -150,6 +168,8 @@ const handlePopularSearch = (searchTerm) => {
             image={recipe.recipe.image}
             ingredients={recipe.recipe.ingredients} 
         />
+
+        <button onClick={() => toggleFavorite(recipe.recipe.label)}>{isFavorite(recipe.recipe.label) ? '⭐' : '☆'} {/* Check favorite status using the new function */}</button>        
         <button onClick={() => handleFetchNutrients(recipe)}>Get Nutrients</button> {/* Button to fetch nutrients */}
         </div>
     ))}
