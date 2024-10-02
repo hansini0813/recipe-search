@@ -5,9 +5,9 @@ import Footer from './Footer';
 import './App.css';
 import LoginButton from "./components/login"; 
 import LogoutButton from "./components/logout"; 
+import Modal from './Modal'; // Adjust path if necessary
 import {gapi} from 'gapi-script';
 import ProfileIcon from './ProfileIcon'; // Adjust based on your structure
-
 
 
 const clientId = "1074901770611-lgodugpovkdhl9n0dqfrtht2rgj30jgq.apps.googleusercontent.com";
@@ -36,6 +36,8 @@ const [search, setSearch] = useState(""); //state to store user input for search
 const [query, setQuery] = useState("croissant"); //state to store the final query when press search
 const [nutrition, setNutrition] = useState(null); // To store nutrition info
 const [favorites, setFavorites] = useState(new Set()); // Set to store favorite recipe labels
+const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+
 
 //EFFECTS
 //activates on page load, and everytime [] is updated (never lel)
@@ -108,6 +110,8 @@ const updateSearch = (e) => {
 const handleFetchNutrients = (recipe) => {
     const ingredients = extractIngredients(recipe.recipe.ingredients); // Extract ingredients from the recipe
     getNutrients(ingredients); // Pass the extracted ingredients to getNutrients
+    setIsModalOpen(true); // Open the modal when nutrients are fetched
+
 };
 
 //updating query when click on search
@@ -195,27 +199,12 @@ const isFavorite = (recipeLabel) => {
     ))}
     </div>
     {nutrition && (
-    <div className="nutrition-info">
-        <h2>Nutrition Facts</h2>
-        <h4>Amount Per Serving</h4>
-        <p>Calories: {nutrition.calories}</p>
-        <p>Total Fat: {nutrition.totalNutrients.FAT.quantity} g ({nutrition.totalNutrients.FAT.percentOfDailyNeeds} %)</p>
-        <p>Saturated Fat: {nutrition.totalNutrients.FASAT.quantity} g ({nutrition.totalNutrients.FASAT.percentOfDailyNeeds} %)</p>
-        <p>Trans Fat: {nutrition.totalNutrients.FATRN.quantity} g</p>
-        <p>Cholesterol: {nutrition.totalNutrients.CHOLE.quantity} mg ({nutrition.totalNutrients.CHOLE.percentOfDailyNeeds} %)</p>
-        <p>Sodium: {nutrition.totalNutrients.NA.quantity} mg ({nutrition.totalNutrients.NA.percentOfDailyNeeds} %)</p>
-        <p>Total Carbohydrate: {nutrition.totalNutrients.CHOCDF.quantity} g ({nutrition.totalNutrients.CHOCDF.percentOfDailyNeeds} %)</p>
-        <p>Dietary Fiber: {nutrition.totalNutrients.FIBTG.quantity} g ({nutrition.totalNutrients.FIBTG.percentOfDailyNeeds} %)</p>
-        <p>Total Sugars: {nutrition.totalNutrients.SUGAR.quantity} g</p>
-        <p>Includes - Added Sugars: {nutrition.totalNutrients.SUGAR.addedSugars || 0} g</p>
-        <p>Protein: {nutrition.totalNutrients.PROCNT.quantity} g ({nutrition.totalNutrients.PROCNT.percentOfDailyNeeds} %)</p>
-        <p>Vitamin D: {nutrition.totalNutrients.VITD.quantity} µg ({nutrition.totalNutrients.VITD.percentOfDailyNeeds} %)</p>
-        <p>Calcium: {nutrition.totalNutrients.CA.quantity} mg ({nutrition.totalNutrients.CA.percentOfDailyNeeds} %)</p>
-        <p>Iron: {nutrition.totalNutrients.FE.quantity} mg ({nutrition.totalNutrients.FE.percentOfDailyNeeds} %)</p>
-        <p>Potassium: {nutrition.totalNutrients.K.quantity} mg ({nutrition.totalNutrients.K.percentOfDailyNeeds} %)</p>
-    </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // Close modal handler
+        nutrition={nutrition}
+      />
     )}
-
       <Footer />
     </div>
   );
