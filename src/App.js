@@ -6,6 +6,9 @@ import './App.css';
 import LoginButton from "./components/login"; 
 import LogoutButton from "./components/logout"; 
 import {gapi} from 'gapi-script';
+import ProfileIcon from './ProfileIcon'; // Adjust based on your structure
+
+
 
 const clientId = "1074901770611-lgodugpovkdhl9n0dqfrtht2rgj30jgq.apps.googleusercontent.com";
 
@@ -155,13 +158,11 @@ const isFavorite = (recipeLabel) => {
     gapi.load('client:auth2', start);
 
   });
-
-
-
-
+  
   return(
     <div className="App">
       <Title />
+      <ProfileIcon />
       <form onSubmit={getSearch} className="search-form">
         <input className="search-bar" type="text" placeholder="Enter your favourite dish, I'm sure we have it! :)" value={search} onChange={updateSearch}/> {/*passes the onChange event to updateSearch, it needs to be here so can retrieve input value (as opposed to button)*/}
         <button className="search-button" type="submit" onMouseOver={buttonOver} onMouseOut={buttonOut}>Search</button>

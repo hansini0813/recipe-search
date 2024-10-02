@@ -1,10 +1,15 @@
 import { GoogleLogin } from '@react-oauth/google';
+import { useUser } from '../UserContext'; // Import useUser hook
 
 const clientId = "1074901770611-lgodugpovkdhl9n0dqfrtht2rgj30jgq.apps.googleusercontent.com";
 
 function Login(){
+    const { setUser } = useUser(); // Get the setUser function from context
+
     const onSuccess = (res) => {
         console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+        setUser(res.profileObj); // Save user data to context
+
     }
 
     const onFailure = (res) => {
