@@ -3,7 +3,11 @@ import Recipe from './Recipe';
 import Title from './Title';
 import Footer from './Footer';
 import './App.css';
+import LoginButton from "./components/login"; 
+import LogoutButton from "./components/logout"; 
+import {gapi} from 'gapi-script';
 
+const clientId = "1074901770611-lgodugpovkdhl9n0dqfrtht2rgj30jgq.apps.googleusercontent.com";
 
 const App = () => {
 
@@ -141,6 +145,19 @@ const isFavorite = (recipeLabel) => {
     });
   };
 
+  useEffect(()=> {
+    function start() {
+        gapi.client.init({
+            clientId: clientId, 
+            scope : ""
+        })
+    };
+    gapi.load('client:auth2', start);
+
+  });
+
+
+
 
   return(
     <div className="App">
@@ -149,6 +166,8 @@ const isFavorite = (recipeLabel) => {
         <input className="search-bar" type="text" placeholder="Enter your favourite dish, I'm sure we have it! :)" value={search} onChange={updateSearch}/> {/*passes the onChange event to updateSearch, it needs to be here so can retrieve input value (as opposed to button)*/}
         <button className="search-button" type="submit" onMouseOver={buttonOver} onMouseOut={buttonOut}>Search</button>
       </form>
+      <LoginButton/>
+      <LogoutButton/>
       {/* Popular Search Buttons */}
       <div className="popular-searches">
         <h2>Popular Searches</h2>
