@@ -8,8 +8,6 @@ function Login(){
 
     const onSuccess = (res) => {
         console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
-        setUser(res.profileObj); // Save user data to context
-
     }
 
     const onFailure = (res) => {

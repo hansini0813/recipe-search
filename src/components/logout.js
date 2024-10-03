@@ -10,7 +10,6 @@ function Logout() {
 
     const onSuccess = () => {
         console.log("Log out Successfull!");
-        setUser(null); // Clear user data from context
     }
 
     return(

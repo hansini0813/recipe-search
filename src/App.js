@@ -152,16 +152,23 @@ const isFavorite = (recipeLabel) => {
     });
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     function start() {
         gapi.client.init({
-            clientId: clientId, 
-            scope : ""
-        })
-    };
+            clientId: clientId,
+            scope: ''
+        }).then(() => {
+            console.log('GAPI client initialized.');
+        }).catch(err => {
+            console.error('Error initializing GAPI client:', err);
+        });
+    }
     gapi.load('client:auth2', start);
 
-  });
+    return () => {
+        // Clean up if needed
+    };
+}, []); // Empty array ensures this runs only on mount
   
   return(
     <div className="App">

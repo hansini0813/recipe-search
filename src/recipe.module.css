@@ -17,4 +17,14 @@
     margin-bottom: 7px;
 }
 
+.number-input {
+    width: 100%; /* Adjust width as needed */  
+    padding: 8px; /* Add some padding */  
+    font-size: 16px; /* Font size */  
+    border: 1px solid #ccc; /* Border Styling */
+    border-radius: 4px; /* Rounded corners */
+}
+
+
+
 /* to add css module for components, will not matter if use same class name */
